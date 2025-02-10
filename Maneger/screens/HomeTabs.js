@@ -3,8 +3,8 @@ import { MaterialIcons } from "@expo/vector-icons";
 import HomeScreen from "./HomeScreens";
 import ProfileScreen from "./Profile";
 import SettingsScreen from "./SettingsScreen";
-
-// ... other imports
+import HelpScreen from "./HelpScreen";
+import AboutScreen from "./About";
 
 const Tab = createBottomTabNavigator();
 
