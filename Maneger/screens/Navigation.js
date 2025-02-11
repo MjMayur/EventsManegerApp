@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import MainDrawer from "./MainDrawer";
 import LoginScreen from "./Login";
+import HomeTabs from "./HomeTabs";
 
 const Stack = createStackNavigator();
 
@@ -16,7 +17,7 @@ export default function Navigation() {
         />
         <Stack.Screen
           name="Main"
-          component={MainDrawer}
+          component={HomeTabs}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

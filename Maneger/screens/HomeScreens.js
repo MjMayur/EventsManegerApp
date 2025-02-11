@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   Image,
   TextInput,
-  FlatList,
   StyleSheet,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -23,22 +22,144 @@ const HomeScreen = ({ navigation }) => {
     "Sports",
     "Festival",
   ];
-  const upcomingEvents = [
+
+  const services = [
     {
       id: "1",
-      title: "Tech Summit 2024",
-      date: "March 15, 2024",
-      location: "Convention Center",
-      image: "https://source.unsplash.com/800x600/?conference",
+      type: "Venue",
+      vendors: [
+        {
+          id: "1",
+          name: "Grand Hall",
+          image: "https://source.unsplash.com/800x600/?venue",
+          rating: "4.5",
+          price: "$500/hr",
+        },
+        {
+          id: "2",
+          name: "Royal Palace",
+          image: "https://source.unsplash.com/800x600/?palace",
+          rating: "4.8",
+          price: "$700/hr",
+        },
+        {
+          id: "3",
+          name: "City Convention",
+          image: "https://source.unsplash.com/800x600/?convention",
+          rating: "4.3",
+          price: "$600/hr",
+        },
+        {
+          id: "4",
+          name: "Garden Plaza",
+          image: "https://source.unsplash.com/800x600/?garden",
+          rating: "4.7",
+          price: "$550/hr",
+        },
+      ],
     },
     {
       id: "2",
-      title: "Music Festival",
-      date: "April 20, 2024",
-      location: "Central Park",
-      image: "https://source.unsplash.com/800x600/?concert",
+      type: "Caterer",
+      vendors: [
+        {
+          id: "1",
+          name: "Gourmet Delights",
+          image: "https://source.unsplash.com/800x600/?catering",
+          rating: "4.6",
+          price: "$30/person",
+        },
+        {
+          id: "2",
+          name: "Tasty Bites",
+          image: "https://source.unsplash.com/800x600/?food",
+          rating: "4.4",
+          price: "$25/person",
+        },
+        {
+          id: "3",
+          name: "Chef's Special",
+          image: "https://source.unsplash.com/800x600/?chef",
+          rating: "4.9",
+          price: "$40/person",
+        },
+        {
+          id: "4",
+          name: "Healthy Eats",
+          image: "https://source.unsplash.com/800x600/?healthy",
+          rating: "4.7",
+          price: "$35/person",
+        },
+      ],
     },
-    // Add more events...
+    {
+      id: "3",
+      type: "Decoration",
+      vendors: [
+        {
+          id: "1",
+          name: "Elegant Designs",
+          image: "https://source.unsplash.com/800x600/?decoration",
+          rating: "4.5",
+          price: "$1000/event",
+        },
+        {
+          id: "2",
+          name: "Creative Touch",
+          image: "https://source.unsplash.com/800x600/?decor",
+          rating: "4.8",
+          price: "$1200/event",
+        },
+        {
+          id: "3",
+          name: "Floral Magic",
+          image: "https://source.unsplash.com/800x600/?flowers",
+          rating: "4.6",
+          price: "$900/event",
+        },
+        {
+          id: "4",
+          name: "Luxury Themes",
+          image: "https://source.unsplash.com/800x600/?luxury",
+          rating: "4.7",
+          price: "$1500/event",
+        },
+      ],
+    },
+    {
+      id: "4",
+      type: "Photographer",
+      vendors: [
+        {
+          id: "1",
+          name: "Capture Moments",
+          image: "https://source.unsplash.com/800x600/?photographer",
+          rating: "4.7",
+          price: "$300/hr",
+        },
+        {
+          id: "2",
+          name: "Lens Master",
+          image: "https://source.unsplash.com/800x600/?camera",
+          rating: "4.9",
+          price: "$400/hr",
+        },
+        {
+          id: "3",
+          name: "Photo Artistry",
+          image: "https://source.unsplash.com/800x600/?photography",
+          rating: "4.8",
+          price: "$350/hr",
+        },
+        {
+          id: "4",
+          name: "Shutterbug",
+          image: "https://source.unsplash.com/800x600/?photo",
+          rating: "4.6",
+          price: "$320/hr",
+        },
+      ],
+    },
   ];
 
   return (
@@ -59,7 +180,7 @@ const HomeScreen = ({ navigation }) => {
         <MaterialIcons name="search" size={24} color="#666" />
         <TextInput
           style={styles.searchInput}
-          placeholder="Search events..."
+          placeholder="Search services..."
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
@@ -92,35 +213,44 @@ const HomeScreen = ({ navigation }) => {
         ))}
       </ScrollView>
 
-      {/* Upcoming Events */}
-      <Text style={styles.sectionTitle}>Upcoming Events</Text>
-      <FlatList
-        data={upcomingEvents}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={styles.eventCard}
-            onPress={() => navigation.navigate("EventDetails", { event: item })}
+      {/* Services */}
+      {services.map((service) => (
+        <View key={service.id}>
+          <Text style={styles.sectionTitle}>{service.type}</Text>
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            style={styles.serviceScrollContainer}
           >
-            <Image source={{ uri: item.image }} style={styles.eventImage} />
-            <View style={styles.eventInfo}>
-              <Text style={styles.eventTitle}>{item.title}</Text>
-              <View style={styles.eventDetail}>
-                <MaterialIcons name="date-range" size={18} color="#666" />
-                <Text style={styles.eventText}>{item.date}</Text>
-              </View>
-              <View style={styles.eventDetail}>
-                <MaterialIcons name="location-on" size={18} color="#666" />
-                <Text style={styles.eventText}>{item.location}</Text>
-              </View>
-              <TouchableOpacity style={styles.registerButton}>
-                <Text style={styles.registerButtonText}>Register Now</Text>
+            {service.vendors.map((vendor) => (
+              <TouchableOpacity
+                key={vendor.id}
+                style={styles.serviceCard}
+                onPress={() => navigation.navigate("VendorDetails", { vendor })}
+              >
+                <Image
+                  source={{ uri: vendor.image }}
+                  style={styles.serviceImage}
+                />
+                <View style={styles.serviceInfo}>
+                  <Text style={styles.serviceName}>{vendor.name}</Text>
+                  <View style={styles.vendorDetail}>
+                    <MaterialIcons name="star" size={16} color="#FFD700" />
+                    <Text style={styles.vendorText}>{vendor.rating}</Text>
+                  </View>
+                  <View style={styles.vendorDetail}>
+                    <MaterialIcons name="attach-money" size={16} color="#666" />
+                    <Text style={styles.vendorText}>{vendor.price}</Text>
+                  </View>
+                  <TouchableOpacity style={styles.bookNowButton}>
+                    <Text style={styles.bookNowButtonText}>Book Now</Text>
+                  </TouchableOpacity>
+                </View>
               </TouchableOpacity>
-            </View>
-          </TouchableOpacity>
-        )}
-        scrollEnabled={false}
-      />
+            ))}
+          </ScrollView>
+        </View>
+      ))}
     </ScrollView>
   );
 };
@@ -185,48 +315,52 @@ const styles = StyleSheet.create({
     color: "#333",
     marginBottom: 16,
   },
-  eventCard: {
+  serviceScrollContainer: {
+    marginBottom: 20,
+  },
+  serviceCard: {
+    width: 200,
     backgroundColor: "#fff",
     borderRadius: 12,
-    marginBottom: 16,
+    marginRight: 16,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
     elevation: 3,
   },
-  eventImage: {
+  serviceImage: {
     width: "100%",
-    height: 180,
+    height: 120,
     borderTopLeftRadius: 12,
     borderTopRightRadius: 12,
   },
-  eventInfo: {
-    padding: 16,
+  serviceInfo: {
+    padding: 12,
   },
-  eventTitle: {
-    fontSize: 18,
+  serviceName: {
+    fontSize: 16,
     fontWeight: "600",
     color: "#333",
-    marginBottom: 12,
-  },
-  eventDetail: {
-    flexDirection: "row",
-    alignItems: "center",
     marginBottom: 8,
   },
-  eventText: {
-    marginLeft: 8,
+  vendorDetail: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 4,
+  },
+  vendorText: {
+    marginLeft: 4,
     color: "#666",
   },
-  registerButton: {
+  bookNowButton: {
     backgroundColor: "#2a5298",
     borderRadius: 8,
-    paddingVertical: 12,
+    paddingVertical: 8,
     alignItems: "center",
-    marginTop: 12,
+    marginTop: 8,
   },
-  registerButtonText: {
+  bookNowButtonText: {
     color: "#fff",
     fontWeight: "bold",
   },
