@@ -1,213 +1,161 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
-  TextInput,
-  Button,
   ScrollView,
-  Switch,
   TouchableOpacity,
-  Image,
-  Alert,
+  Linking,
+  StyleSheet,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import * as ImagePicker from "expo-image-picker";
-import { useForm, Controller } from "react-hook-form";
-import * as yup from "yup";
-import { yupResolver } from "@hookform/resolvers/yup";
+import { MaterialIcons, FontAwesome, Ionicons } from "@expo/vector-icons";
 
-const eventSchema = yup.object().shape({
-  eventName: yup.string().required("Event Name is required"),
-  category: yup.string().required("Select a category"),
-  date: yup.date().required("Event date is required"),
-  time: yup.string().required("Event time is required"),
-  location: yup.string().required("Location is required"),
-  description: yup.string().required("Event description is required"),
-  maxAttendees: yup
-    .number()
-    .required("Max attendees required")
-    .positive()
-    .integer(),
-  ticketPrice: yup.number().nullable().min(0, "Price must be positive"),
-  organizerName: yup.string().required("Organizer name is required"),
-  contactEmail: yup
-    .string()
-    .email("Invalid email")
-    .required("Email is required"),
-  contactPhone: yup
-    .string()
-    .matches(/^\d{10}$/, "Enter a valid 10-digit phone number")
-    .required("Phone number required"),
-});
+const HelpScreen = () => {
+  const faqs = [
+    {
+      question: "How do I create a new event?",
+      answer:
+        "Go to the 'Create Event' screen, fill in the required details, and click 'Create Event'.",
+    },
+    {
+      question: "Can I edit an event after creating it?",
+      answer:
+        "Currently, editing events is not supported. You can delete and recreate the event.",
+    },
+    {
+      question: "How do I upload an event banner?",
+      answer:
+        "Click the 'Upload Event Banner' button and select an image from your gallery.",
+    },
+    {
+      question: "What is the maximum number of attendees I can set?",
+      answer:
+        "You can set any positive number, but ensure it complies with your event venue's capacity.",
+    },
+  ];
 
-const NewEventScreen = () => {
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(eventSchema),
-  });
-
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const [selectedTime, setSelectedTime] = useState(new Date());
-  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
-  const [isTimePickerVisible, setTimePickerVisible] = useState(false);
-  const [isRSVP, setRSVP] = useState(false);
-  const [imageUri, setImageUri] = useState(null);
-
-  const selectImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
-
-    if (!result.canceled) {
-      setImageUri(result.uri);
-    }
-  };
-
-  const onSubmit = (data) => {
-    console.log("Event Data:", { ...data, isRSVP, eventImage: imageUri });
-    Alert.alert("Success", "Event Created Successfully!");
+  const contactSupport = () => {
+    Linking.openURL("mailto:support@eventapp.com");
   };
 
   return (
-    <ScrollView style={{ padding: 20 }}>
-      <Text style={{ fontSize: 22, fontWeight: "bold", marginBottom: 10 }}>
-        Create New Event
-      </Text>
+    <ScrollView style={styles.container}>
+      <Text style={styles.header}>Help & Support</Text>
 
-      {/* Event Name */}
-      <Text>Event Name</Text>
-      <Controller
-        control={control}
-        name="eventName"
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            style={styles.input}
-            placeholder="Enter event name"
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-      />
-      {errors.eventName && (
-        <Text style={styles.error}>{errors.eventName.message}</Text>
-      )}
+      {/* FAQ Section */}
+      <Text style={styles.sectionTitle}>Frequently Asked Questions</Text>
+      {faqs.map((faq, index) => (
+        <View key={index} style={styles.faqContainer}>
+          <Text style={styles.question}>
+            <MaterialIcons name="help-outline" size={16} color="#007bff" />{" "}
+            {faq.question}
+          </Text>
+          <Text style={styles.answer}>{faq.answer}</Text>
+        </View>
+      ))}
 
-      {/* Category Picker */}
-      <Text>Event Category</Text>
-      <Controller
-        control={control}
-        name="category"
-        render={({ field: { onChange, value } }) => (
-          <Picker
-            selectedValue={value}
-            onValueChange={onChange}
-            style={styles.picker}
-          >
-            <Picker.Item label="Select Category" value="" />
-            <Picker.Item label="Music" value="music" />
-            <Picker.Item label="Technology" value="tech" />
-            <Picker.Item label="Business" value="business" />
-            <Picker.Item label="Sports" value="sports" />
-          </Picker>
-        )}
-      />
-      {errors.category && (
-        <Text style={styles.error}>{errors.category.message}</Text>
-      )}
-
-      {/* Date Picker */}
-      <Text>Event Date</Text>
-      <TouchableOpacity onPress={() => setDatePickerVisible(true)}>
-        <Text style={styles.dateTime}>{selectedDate.toDateString()}</Text>
+      {/* Contact Support Section */}
+      <Text style={styles.sectionTitle}>Contact Support</Text>
+      <TouchableOpacity style={styles.contactButton} onPress={contactSupport}>
+        <FontAwesome name="envelope" size={20} color="#fff" />
+        <Text style={styles.contactButtonText}>Email Support</Text>
       </TouchableOpacity>
-      {isDatePickerVisible && (
-        <DateTimePicker
-          value={selectedDate}
-          mode="date"
-          display="default"
-          onChange={(event, date) => {
-            setDatePickerVisible(false);
-            if (date) setSelectedDate(date);
-          }}
-        />
-      )}
 
-      {/* Time Picker */}
-      <Text>Event Time</Text>
-      <TouchableOpacity onPress={() => setTimePickerVisible(true)}>
-        <Text style={styles.dateTime}>{selectedTime.toLocaleTimeString()}</Text>
-      </TouchableOpacity>
-      {isTimePickerVisible && (
-        <DateTimePicker
-          value={selectedTime}
-          mode="time"
-          display="default"
-          onChange={(event, time) => {
-            setTimePickerVisible(false);
-            if (time) setSelectedTime(time);
-          }}
-        />
-      )}
-
-      {/* Location */}
-      <Text>Location</Text>
-      <Controller
-        control={control}
-        name="location"
-        render={({ field: { onChange, value } }) => (
-          <TextInput
-            style={styles.input}
-            placeholder="Enter location"
-            onChangeText={onChange}
-            value={value}
-          />
-        )}
-      />
-      {errors.location && (
-        <Text style={styles.error}>{errors.location.message}</Text>
-      )}
-
-      {/* Image Upload */}
-      <Text>Event Banner</Text>
-      <TouchableOpacity onPress={selectImage} style={styles.imagePicker}>
-        <Text>Upload Image</Text>
-      </TouchableOpacity>
-      {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
-
-      {/* RSVP Switch */}
-      <Text>RSVP Required?</Text>
-      <Switch value={isRSVP} onValueChange={setRSVP} />
-
-      {/* Submit Button */}
-      <Button title="Create Event" onPress={handleSubmit(onSubmit)} />
+      {/* Quick Guide Section */}
+      <Text style={styles.sectionTitle}>Quick Guide</Text>
+      <View style={styles.guideContainer}>
+        <View style={styles.guideStep}>
+          <Ionicons name="create-outline" size={24} color="#007bff" />
+          <Text style={styles.guideText}>
+            1. Create an event with all required details.
+          </Text>
+        </View>
+        <View style={styles.guideStep}>
+          <MaterialIcons name="upload-file" size={24} color="#007bff" />
+          <Text style={styles.guideText}>
+            2. Upload an event banner for better visibility.
+          </Text>
+        </View>
+        <View style={styles.guideStep}>
+          <FontAwesome name="share-alt" size={24} color="#007bff" />
+          <Text style={styles.guideText}>
+            3. Share the event link with attendees.
+          </Text>
+        </View>
+      </View>
     </ScrollView>
   );
 };
 
-const styles = {
-  input: { borderWidth: 1, padding: 10, marginBottom: 10, borderRadius: 5 },
-  picker: { borderWidth: 1, marginBottom: 10 },
-  dateTime: {
-    padding: 10,
-    borderWidth: 1,
-    marginBottom: 10,
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: "#f5f5f5",
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 20,
     textAlign: "center",
+    color: "#333",
   },
-  imagePicker: {
-    borderWidth: 1,
-    padding: 10,
-    alignItems: "center",
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginTop: 20,
     marginBottom: 10,
+    color: "#333",
   },
-  image: { width: "100%", height: 200, marginBottom: 10 },
-  error: { color: "red", marginBottom: 10 },
-};
+  faqContainer: {
+    marginBottom: 15,
+    padding: 10,
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#eee",
+  },
+  question: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#007bff",
+    marginBottom: 5,
+  },
+  answer: {
+    fontSize: 14,
+    color: "#666",
+  },
+  contactButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#007bff",
+    padding: 15,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  contactButtonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+    marginLeft: 10,
+  },
+  guideContainer: {
+    backgroundColor: "#fff",
+    padding: 15,
+    borderRadius: 5,
+    borderWidth: 1,
+    borderColor: "#eee",
+  },
+  guideStep: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 15,
+  },
+  guideText: {
+    fontSize: 14,
+    color: "#333",
+    marginLeft: 10,
+  },
+});
 
-export default NewEventScreen;
+export default HelpScreen;

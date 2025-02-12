@@ -41,7 +41,6 @@ export default function HomeTabs() {
         }}
       />
 
-      {/* Middle Tab with Custom Size */}
       <Tab.Screen
         name="New Event"
         component={NewEventScreen}
@@ -66,7 +65,7 @@ export default function HomeTabs() {
 
       <Tab.Screen
         name="Profile"
-        component={ProfileScreen}
+        component={HelpScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="person" size={size} color={color} />
