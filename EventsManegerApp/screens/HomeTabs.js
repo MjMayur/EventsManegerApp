@@ -8,6 +8,7 @@ import HelpScreen from "./HelpScreen"; // Ensure this file exists
 import AboutScreen from "./About";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import NewEventScreen from "./NewEvent";
+import MyEventsScreens from "./MyEventsScreens";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -26,7 +27,7 @@ function MainTabs({ navigation }) {
             onPress={() => navigation.navigate("Help")} // Help is in Stack now
             style={{ marginRight: 15 }}
           >
-            <MaterialIcons name="help" size={24} color="gray" />
+            <MaterialIcons name="more-vert" size={24} color="gray" />
           </TouchableOpacity>
         ),
       }}
@@ -37,16 +38,6 @@ function MainTabs({ navigation }) {
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="home" size={size} color={color} />
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="My Events"
-        component={SettingsScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="celebration" size={size} color={color} />
           ),
         }}
       />
@@ -74,21 +65,11 @@ function MainTabs({ navigation }) {
       />
 
       <Tab.Screen
-        name="AboutTab"
-        component={AboutScreen}
+        name="My Events"
+        component={MyEventsScreens}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="settings" size={size} color={color} />
-          ),
-        }}
-      />
-
-      <Tab.Screen
-        name="Profile"
-        component={ProfileScreen}
-        options={{
-          tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="person" size={size} color={color} />
+            <MaterialIcons name="celebration" size={size} color={color} />
           ),
         }}
       />
