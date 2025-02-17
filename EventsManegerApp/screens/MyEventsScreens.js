@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import {
   View,
   Text,
-  ScrollView,
   TouchableOpacity,
   Image,
   StyleSheet,
@@ -38,11 +37,11 @@ export default function MyEventsScreens() {
         renderTabBar={(props) => (
           <TabBar
             {...props}
-            indicatorStyle={styles.tabIndicator}
-            style={styles.tabBar}
-            labelStyle={styles.tabLabel}
-            activeColor="#2a5298"
-            inactiveColor="#666"
+            indicatorStyle={styles.tabIndicator} // Style for the active tab indicator
+            style={styles.tabBar} // Style for the tab bar container
+            labelStyle={styles.tabLabel} // Style for the tab labels
+            activeColor="#2a5298" // Color for the active tab label
+            inactiveColor="#666" // Color for the inactive tab labels
           />
         )}
       />
@@ -89,32 +88,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
   },
-  header: {
-    padding: 16,
-    backgroundColor: "#fff",
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  greeting: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
-  },
   tabBar: {
-    backgroundColor: "#fff",
-    elevation: 0,
-    shadowOpacity: 0,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+    backgroundColor: "#fff", // Background color of the tab bar
+    elevation: 2, // Add shadow for Android
+    shadowOpacity: 0.1, // Add shadow for iOS
+    shadowRadius: 4,
+    shadowOffset: { width: 0, height: 2 },
   },
   tabLabel: {
     fontSize: 14,
     fontWeight: "600",
-    textTransform: "capitalize",
+    textTransform: "capitalize", // Capitalize tab labels
   },
   tabIndicator: {
-    backgroundColor: "#2a5298",
-    height: 3,
+    backgroundColor: "#2a5298", // Color of the active tab indicator
+    height: 3, // Height of the indicator
   },
   serviceCardVertical: {
     backgroundColor: "#fff",
