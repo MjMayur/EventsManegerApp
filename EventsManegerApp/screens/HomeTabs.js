@@ -24,10 +24,10 @@ function MainTabs({ navigation }) {
         },
         headerRight: () => (
           <TouchableOpacity
-            onPress={() => navigation.navigate("Help")} // Help is in Stack now
+            onPress={() => navigation.navigate("Profile")} // Help is in Stack now
             style={{ marginRight: 15 }}
           >
-            <MaterialIcons name="more-vert" size={24} color="gray" />
+            <MaterialIcons name="account-circle" size={24} color="gray" />
           </TouchableOpacity>
         ),
       }}
@@ -89,6 +89,11 @@ export default function AppNavigator() {
         name="Help"
         component={HelpScreen} // Now HelpScreen is registered in Stack
         options={{ title: "Help" }}
+      />
+      <Stack.Screen
+        name="Profile"
+        component={ProfileScreen} // Now HelpScreen is registered in Stack
+        options={{ title: "Profile" }}
       />
     </Stack.Navigator>
   );

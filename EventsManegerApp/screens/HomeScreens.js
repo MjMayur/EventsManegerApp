@@ -37,14 +37,22 @@ const HomeScreen = ({ navigation }) => {
   return (
     <ScrollView style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
-        <View>
-          <Text style={styles.greeting}>Hey it's Party time.</Text>
-          <Text style={styles.date}>{new Date().toDateString()}</Text>
+      <View style={styles.headerContainer}>
+        <Image
+          source={{ uri: "https://example.com/party-header-image.jpg" }} // Replace with your image URL
+          style={styles.headerImage}
+        />
+        <View style={styles.headerOverlay}>
+          <View>
+            <Text style={styles.greeting}>Hey it's Party time.</Text>
+            <Text style={styles.date}>{new Date().toDateString()}</Text>
+          </View>
+          <TouchableOpacity
+            onPress={() => navigation.navigate("Notifications")}
+          >
+            <MaterialIcons name="notifications" size={28} color="#fff" />
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={() => navigation.navigate("Notifications")}>
-          <MaterialIcons name="notifications" size={28} color="#333" />
-        </TouchableOpacity>
       </View>
 
       {/* Categories */}
@@ -324,6 +332,47 @@ const styles = StyleSheet.create({
   },
   verticalScrollContainer: {
     paddingBottom: 20,
+  },
+  headerContainer: {
+    height: 200,
+    marginBottom: 24,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  headerImage: {
+    flex: 1,
+    width: "100%",
+    resizeMode: "cover",
+  },
+  headerOverlay: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    padding: 16,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    backgroundColor: "rgba(0,0,0,0.3)",
+  },
+  greeting: {
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "#fff",
+    textShadowColor: "rgba(0,0,0,0.5)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
+  },
+  date: {
+    fontSize: 14,
+    color: "#fff",
+    textShadowColor: "rgba(0,0,0,0.5)",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 2,
   },
   // Add these new styles
   // dotsContainer: {
