@@ -59,7 +59,7 @@ export default function ProfileScreen({ navigation }) {
         <View style={styles.menuContainer}>
           <TouchableOpacity
             style={styles.menuItem}
-            onPress={() => navigation.navigate("ChangePassword")}
+            onPress={() => navigation.navigate("Change Password")}
           >
             <MaterialCommunityIcons name="key" size={24} color="#2d4150" />
             <Text style={styles.menuText}>Change Password</Text>
@@ -106,9 +106,7 @@ export default function ProfileScreen({ navigation }) {
 
           <TouchableOpacity
             style={[styles.menuItem, styles.lastMenuItem]}
-            onPress={() => {
-              /* Add your logout logic here */
-            }}
+            onPress={() => navigation.navigate("Login")}
           >
             <MaterialCommunityIcons name="logout" size={24} color="#2d4150" />
             <Text style={styles.menuText}>Log Out</Text>
