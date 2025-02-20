@@ -9,6 +9,7 @@ import AboutScreen from "./About";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
 import NewEventScreen from "./NewEvent";
 import MyEventsScreens from "./MyEventsScreens";
+import ChangePasswordScreen from "./ChangePasswordScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -91,9 +92,19 @@ export default function AppNavigator() {
         options={{ title: "Help" }}
       />
       <Stack.Screen
+        name="About"
+        component={AboutScreen} // Now HelpScreen is registered in Stack
+        options={{ title: "About" }}
+      />
+      <Stack.Screen
         name="Profile"
         component={ProfileScreen} // Now HelpScreen is registered in Stack
         options={{ title: "Profile" }}
+      />
+      <Stack.Screen
+        name="Change Password"
+        component={ChangePasswordScreen} // Now HelpScreen is registered in Stack
+        options={{ title: "ChangePassword" }}
       />
     </Stack.Navigator>
   );
