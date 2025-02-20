@@ -48,6 +48,7 @@ const HomeScreen = ({ navigation }) => {
             <Text style={styles.date}>{new Date().toDateString()}</Text>
           </View>
           <TouchableOpacity
+            style={styles.greeting}
             onPress={() => navigation.navigate("Notifications")}
           >
             <MaterialIcons name="notifications" size={28} color="#fff" />
@@ -195,11 +196,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: 24,
-  },
-  greeting: {
-    fontSize: 24,
-    fontWeight: "bold",
-    color: "#333",
   },
   date: {
     fontSize: 14,
@@ -360,6 +356,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.3)",
   },
   greeting: {
+    marginTop: 120,
     fontSize: 24,
     fontWeight: "bold",
     color: "#fff",
