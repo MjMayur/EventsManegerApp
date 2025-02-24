@@ -13,17 +13,6 @@ export default function AboutScreen({ navigation }) {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
-        <View style={styles.header}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
-            <MaterialCommunityIcons
-              name="arrow-left"
-              size={24}
-              color="#6D28D9"
-            />
-          </TouchableOpacity>
-          <Text style={styles.headerTitle}>About</Text>
-        </View>
-
         <View style={styles.contentContainer}>
           {/* App Logo/Icon Section */}
           <View style={styles.logoContainer}>
@@ -32,8 +21,8 @@ export default function AboutScreen({ navigation }) {
               size={80}
               color="#6D28D9"
             />
-            <Text style={styles.appName}>EVON</Text>
-            <Text style={styles.tagline}>Discover Events Near You</Text>
+            <Text style={styles.appName}>Manager</Text>
+            <Text style={styles.tagline}>Discover your Events</Text>
           </View>
 
           {/* App Info Card */}
@@ -47,9 +36,9 @@ export default function AboutScreen({ navigation }) {
               <View style={styles.infoText}>
                 <Text style={styles.infoLabel}>Description</Text>
                 <Text style={styles.infoDescription}>
-                  EVON is your ultimate event discovery platform, connecting you
-                  with the best local events, concerts, and activities in your
-                  area.
+                  Manager is your ultimate event discovery platform, connecting
+                  you with the best local events, concerts, and activities in
+                  your area.
                 </Text>
               </View>
             </View>
@@ -78,7 +67,7 @@ export default function AboutScreen({ navigation }) {
               />
               <View style={styles.infoText}>
                 <Text style={styles.infoLabel}>Developed By</Text>
-                <Text style={styles.infoValue}>EVON Team</Text>
+                <Text style={styles.infoValue}>Manager Team</Text>
               </View>
             </View>
           </View>
@@ -111,7 +100,7 @@ export default function AboutScreen({ navigation }) {
 
           {/* Legal Info */}
           <Text style={styles.legalText}>
-            © 2023 EVON. All rights reserved.{"\n"}
+            © 2025 Manager. All rights reserved.{"\n"}
             <Text
               style={styles.linkText}
               onPress={() => navigation.navigate("Terms")}

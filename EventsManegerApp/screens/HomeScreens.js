@@ -65,10 +65,6 @@ const HomeScreen = ({ navigation }) => {
         {categories.map((category) => (
           <TouchableOpacity
             key={category}
-            style={[
-              styles.categoryButton,
-              selectedCategory === category && styles.selectedCategoryButton,
-            ]}
             onPress={() => setSelectedCategory(category)}
           >
             <Text
