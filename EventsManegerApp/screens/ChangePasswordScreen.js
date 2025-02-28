@@ -33,87 +33,97 @@ export default function ChangePasswordScreen({ navigation }) {
     <SafeAreaView style={styles.container}>
       <ScrollView contentContainerStyle={styles.scrollContainer}>
         <View style={styles.formContainer}>
-          {/* Current Password Input */}
-          <View style={styles.inputContainer}>
-            <MaterialCommunityIcons
-              name="lock-outline"
-              size={20}
-              color="#666"
-              style={styles.inputIcon}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Current Password"
-              secureTextEntry={!showCurrent}
-              value={currentPassword}
-              onChangeText={setCurrentPassword}
-            />
-            <TouchableOpacity
-              onPress={() => setShowCurrent(!showCurrent)}
-              style={styles.eyeIcon}
-            >
+          {/* Current Password */}
+          <View style={styles.inputWrapper}>
+            <Text style={styles.label}>Current Password</Text>
+            <View style={styles.inputContainer}>
               <MaterialCommunityIcons
-                name={showCurrent ? "eye-off" : "eye"}
+                name="lock-outline"
                 size={20}
                 color="#666"
+                style={styles.inputIcon}
               />
-            </TouchableOpacity>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter current password"
+                secureTextEntry={!showCurrent}
+                value={currentPassword}
+                onChangeText={setCurrentPassword}
+              />
+              <TouchableOpacity
+                onPress={() => setShowCurrent(!showCurrent)}
+                style={styles.eyeIcon}
+              >
+                <MaterialCommunityIcons
+                  name={showCurrent ? "eye-off" : "eye"}
+                  size={20}
+                  color="#666"
+                />
+              </TouchableOpacity>
+            </View>
           </View>
 
-          {/* New Password Input */}
-          <View style={styles.inputContainer}>
-            <MaterialCommunityIcons
-              name="lock-plus"
-              size={20}
-              color="#666"
-              style={styles.inputIcon}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="New Password"
-              secureTextEntry={!showNew}
-              value={newPassword}
-              onChangeText={setNewPassword}
-            />
-            <TouchableOpacity
-              onPress={() => setShowNew(!showNew)}
-              style={styles.eyeIcon}
-            >
+          {/* New Password */}
+          <View style={styles.inputWrapper}>
+            <Text style={styles.label}>New Password</Text>
+            <View style={styles.inputContainer}>
               <MaterialCommunityIcons
-                name={showNew ? "eye-off" : "eye"}
+                name="lock-plus"
                 size={20}
                 color="#666"
+                style={styles.inputIcon}
               />
-            </TouchableOpacity>
+              <TextInput
+                style={styles.input}
+                placeholder="Enter new password"
+                secureTextEntry={!showNew}
+                value={newPassword}
+                onChangeText={setNewPassword}
+              />
+              <TouchableOpacity
+                onPress={() => setShowNew(!showNew)}
+                style={styles.eyeIcon}
+              >
+                <MaterialCommunityIcons
+                  name={showNew ? "eye-off" : "eye"}
+                  size={20}
+                  color="#666"
+                />
+              </TouchableOpacity>
+            </View>
           </View>
 
-          {/* Confirm Password Input */}
-          <View style={styles.inputContainer}>
-            <MaterialCommunityIcons
-              name="lock-check"
-              size={20}
-              color="#666"
-              style={styles.inputIcon}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Confirm New Password"
-              secureTextEntry={!showConfirm}
-              value={confirmPassword}
-              onChangeText={setConfirmPassword}
-            />
-            <TouchableOpacity
-              onPress={() => setShowConfirm(!showConfirm)}
-              style={styles.eyeIcon}
-            >
+          {/* Confirm Password */}
+          <View style={styles.inputWrapper}>
+            <Text style={styles.label}>Confirm New Password</Text>
+            <View style={styles.inputContainer}>
               <MaterialCommunityIcons
-                name={showConfirm ? "eye-off" : "eye"}
+                name="lock-check"
                 size={20}
                 color="#666"
+                style={styles.inputIcon}
               />
-            </TouchableOpacity>
+              <TextInput
+                style={styles.input}
+                placeholder="Confirm new password"
+                secureTextEntry={!showConfirm}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
+              />
+              <TouchableOpacity
+                onPress={() => setShowConfirm(!showConfirm)}
+                style={styles.eyeIcon}
+              >
+                <MaterialCommunityIcons
+                  name={showConfirm ? "eye-off" : "eye"}
+                  size={20}
+                  color="#666"
+                />
+              </TouchableOpacity>
+            </View>
           </View>
 
+          {/* Submit Button */}
           <TouchableOpacity style={styles.button} onPress={handleSubmit}>
             <Text style={styles.buttonText}>Change Password</Text>
           </TouchableOpacity>
@@ -126,7 +136,7 @@ export default function ChangePasswordScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "#f8f9fa",
   },
   scrollContainer: {
     flexGrow: 1,
@@ -136,10 +146,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     padding: 20,
+    backgroundColor: "#fff",
     borderBottomWidth: 1,
-    borderBottomColor: "#eee",
+    borderBottomColor: "#e0e0e0",
   },
-  title: {
+  headerTitle: {
     fontSize: 20,
     fontWeight: "600",
     color: "#2d4150",
@@ -147,33 +158,49 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     padding: 20,
+    marginTop: 20,
+  },
+  inputWrapper: {
+    marginBottom: 20,
+  },
+  label: {
+    fontSize: 14,
+    color: "#666",
+    marginBottom: 8,
+    fontWeight: "500",
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
-    marginBottom: 20,
-    borderWidth: 1,
-    borderColor: "#ddd",
-    borderRadius: 8,
+    backgroundColor: "#fff",
+    borderRadius: 10,
     paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#e0e0e0",
   },
   inputIcon: {
     marginRight: 10,
-  },
-  eyeIcon: {
-    marginLeft: 10,
   },
   input: {
     flex: 1,
     height: 50,
     fontSize: 16,
+    color: "#333",
+  },
+  eyeIcon: {
+    marginLeft: 10,
   },
   button: {
     backgroundColor: "#6D28D9",
     padding: 15,
-    borderRadius: 8,
+    borderRadius: 10,
     alignItems: "center",
     marginTop: 20,
+    elevation: 3,
+    shadowColor: "#6D28D9",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   buttonText: {
     color: "#fff",

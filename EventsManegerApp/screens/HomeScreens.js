@@ -66,6 +66,10 @@ const HomeScreen = ({ navigation }) => {
           <TouchableOpacity
             key={category}
             onPress={() => setSelectedCategory(category)}
+            style={[
+              styles.categoryButton,
+              selectedCategory === category && styles.selectedCategoryButton,
+            ]}
           >
             <Text
               style={[
@@ -90,7 +94,7 @@ const HomeScreen = ({ navigation }) => {
               keyExtractor={(item) => item.id}
               horizontal
               showsHorizontalScrollIndicator={false}
-              // onScroll={(e) => handleScroll(service.id, e)}
+              onScroll={(e) => handleScroll(service.id, e)}
               snapToInterval={width - 32}
               snapToAlignment="start"
               decelerationRate="fast"
@@ -98,9 +102,7 @@ const HomeScreen = ({ navigation }) => {
                 <TouchableOpacity
                   key={vendor.id}
                   style={styles.serviceCard}
-                  onPress={() =>
-                    navigation.navigate("VendorDetails", { vendor })
-                  }
+                  onPress={() => navigation.navigate("Event Details")}
                 >
                   <Image
                     source={{ uri: vendor.image }}

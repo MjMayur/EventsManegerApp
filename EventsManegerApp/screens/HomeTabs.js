@@ -11,6 +11,7 @@ import NewEventScreen from "./NewEvent";
 import MyEventsScreens from "./MyEventsScreens";
 import ChangePasswordScreen from "./ChangePasswordScreen";
 import EventDetailsScreen from "./EventDetailsScreen";
+import Vendors from "./Vendors";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -45,33 +46,20 @@ function MainTabs({ navigation }) {
       />
 
       <Tab.Screen
-        name="New Event"
-        component={NewEventScreen}
-        options={{
-          tabBarIcon: () => (
-            <View style={styles.middleTab}>
-              <MaterialIcons name="add-circle" size={32} color="white" />
-            </View>
-          ),
-          tabBarButton: (props) => (
-            <TouchableOpacity
-              {...props}
-              style={styles.middleTabButton}
-              activeOpacity={0.8}
-              onPress={() => {
-                props.onPress();
-              }}
-            />
-          ),
-        }}
-      />
-
-      <Tab.Screen
         name="My Events"
         component={MyEventsScreens}
         options={{
           tabBarIcon: ({ color, size }) => (
             <MaterialIcons name="celebration" size={size} color={color} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Vendors"
+        component={Vendors}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="group-add" size={size} color={color} />
           ),
         }}
       />
