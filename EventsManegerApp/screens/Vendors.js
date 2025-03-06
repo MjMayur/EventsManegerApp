@@ -2,10 +2,8 @@ import { useState } from "react";
 import {
   View,
   Text,
-  ScrollView,
   TouchableOpacity,
   Image,
-  TextInput,
   StyleSheet,
   FlatList,
   Dimensions,
@@ -13,12 +11,12 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import { services } from "./commonData";
 
-const { width } = Dimensions.get("window"); // Get the screen width
+const { width } = Dimensions.get("window");
 
 const HomeScreen = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
-  const [activeIndices, setActiveIndices] = useState({}); // Track active card index per service
+  const [activeIndices, setActiveIndices] = useState({});
 
   const categories = [
     "All",
@@ -28,100 +26,90 @@ const HomeScreen = ({ navigation }) => {
     "Decorations",
   ];
 
-  // Filter vendors based on the selected category
   const filteredVendors =
     selectedCategory === "All"
       ? services
       : services.filter((service) => service.type === selectedCategory);
 
-  return (
-    <ScrollView style={styles.container}>
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        style={styles.categoriesContainer}
+  const renderCategoryItem = ({ item }) => (
+    <TouchableOpacity
+      onPress={() => setSelectedCategory(item)}
+      style={[
+        styles.categoryButton,
+        selectedCategory === item && styles.selectedCategoryButton,
+      ]}
+    >
+      <Text
+        style={[
+          styles.categoryText,
+          selectedCategory === item && styles.selectedCategoryText,
+        ]}
       >
-        {categories.map((category) => (
-          <TouchableOpacity
-            key={category}
-            onPress={() => setSelectedCategory(category)}
-            style={[
-              styles.categoryButton,
-              selectedCategory === category && styles.selectedCategoryButton,
-            ]}
-          >
-            <Text
-              style={[
-                styles.categoryText,
-                selectedCategory === category && styles.selectedCategoryText,
-              ]}
-            >
-              {category}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </ScrollView>
-      {/* Services */}
-      // Vertical scroll layout for selected category
-      <FlatList
-        data={filteredVendors[0].vendors} // Use the first item's vendors array
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <View style={styles.card}>
-            <TouchableOpacity
-              style={styles.serviceCardVertical}
-              onPress={() =>
-                navigation.navigate("VendorDetails", { vendor: item })
-              }
-            >
-              <View style={styles.serviceInfoVertical}>
-                <Image
-                  source={{ uri: item.image }}
-                  style={styles.serviceImageVertical}
-                />
-                <View style={styles.cards}>
-                  <Text style={styles.serviceName}>{item.name}</Text>
-                  <View style={styles.vendorDetail}>
-                    <Text style={styles.vendorText}>{item.price}</Text>
-                  </View>
-                  <View style={styles.vendorDetail}>
-                    <MaterialIcons name="star" size={16} color="#FFD700" />
-                    <Text style={styles.vendorText}>{item.rating}</Text>
-                  </View>
-                </View>
-              </View>
-            </TouchableOpacity>
+        {item}
+      </Text>
+    </TouchableOpacity>
+  );
+
+  const renderVendorItem = ({ item }) => (
+    <View style={styles.card}>
+      <TouchableOpacity
+        style={styles.serviceCardVertical}
+        onPress={() => navigation.navigate("VendorDetails", { vendor: item })}
+      >
+        <View style={styles.serviceInfoVertical}>
+          <Image
+            source={{ uri: item.image }}
+            style={styles.serviceImageVertical}
+          />
+          <View style={styles.cards}>
+            <Text style={styles.serviceName}>{item.name}</Text>
+            <View style={styles.vendorDetail}>
+              <Text style={styles.vendorText}>{item.price}</Text>
+            </View>
+            <View style={styles.vendorDetail}>
+              <MaterialIcons name="star" size={16} color="#FFD700" />
+              <Text style={styles.vendorText}>{item.rating}</Text>
+            </View>
           </View>
-        )}
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
+
+  return (
+    <View style={styles.container}>
+      {/* Horizontal Categories FlatList */}
+      <FlatList
+        horizontal
+        data={categories}
+        keyExtractor={(item) => item}
+        showsHorizontalScrollIndicator={false}
+        contentContainerStyle={styles.categoriesContainer}
+        renderItem={renderCategoryItem}
+      />
+
+      {/* Vertical Vendors FlatList */}
+      <FlatList
+        data={filteredVendors[0].vendors}
+        keyExtractor={(item) => item.id}
+        renderItem={renderVendorItem}
         contentContainerStyle={styles.verticalScrollContainer}
       />
-    </ScrollView>
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
-  card: {
-    // margin: 5,
-    display: "flex",
-    marginTop: 5,
-    paddingTop: 15,
-    paddingLeft: 10,
-    justifyContent: "center",
-    backgroundColor: "white",
-    borderRadius: 10,
-    marginBottom: 10,
-  },
-  cards: {
-    marginLeft: 20,
+  verticalScrollContainer: {
+    marginTop: 20,
   },
   container: {
     backgroundColor: "#f8f9fa",
+    flex: 1,
     padding: 16,
-    width: "100%",
   },
-
   categoriesContainer: {
-    marginBottom: 20,
+    paddingBottom: 10,
   },
   categoryButton: {
     backgroundColor: "#fff",
@@ -129,12 +117,9 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 16,
     marginRight: 8,
-    marginBottom: 2,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
     elevation: 3,
+    marginBottom: "-100%",
+    height: 40,
   },
   selectedCategoryButton: {
     backgroundColor: "#2a5298",
@@ -146,26 +131,37 @@ const styles = StyleSheet.create({
   selectedCategoryText: {
     color: "#fff",
   },
-
+  card: {
+    marginTop: 5,
+    paddingTop: 15,
+    marginLeft: 50,
+    paddingLeft: 10,
+    justifyContent: "center",
+    backgroundColor: "white",
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  cards: {
+    marginLeft: 20,
+  },
   serviceCardVertical: {
     backgroundColor: "#fff",
     borderRadius: 12,
     marginBottom: 16,
-    shadowColor: "#000",
-    // shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
-    width: 100,
-    height: 100,
+    // elevation: 2,
   },
   serviceImageVertical: {
-    width: "100%",
+    width: 100,
+    height: 100,
+    backgroundColor: "#fff",
+    borderRadius: 12,
+    marginBottom: 16,
+    elevation: 2,
+    marginLeft: "-20%",
+    marginTop: "-10%",
   },
   serviceInfoVertical: {
-    display: "flex",
     flexDirection: "row",
-    // padding: 15,
   },
   serviceName: {
     fontSize: 16,
@@ -177,8 +173,7 @@ const styles = StyleSheet.create({
   vendorDetail: {
     flexDirection: "row",
     alignItems: "center",
-    marginTop: "-5%",
-    // backgroundColor: "blue",
+    // marginTop: "-2%",
   },
   vendorText: {
     marginLeft: 4,
