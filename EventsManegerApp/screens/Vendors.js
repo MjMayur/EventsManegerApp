@@ -70,6 +70,10 @@ const HomeScreen = ({ navigation }) => {
               <MaterialIcons name="star" size={16} color="#FFD700" />
               <Text style={styles.vendorText}>{item.rating}</Text>
             </View>
+            <View style={styles.vendorDetail}>
+              <MaterialIcons name="pin-drop" size={16} color="green" />
+              <Text>{item.address} </Text>
+            </View>
           </View>
         </View>
       </TouchableOpacity>
@@ -101,7 +105,7 @@ const HomeScreen = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   verticalScrollContainer: {
-    marginTop: 20,
+    marginTop: 10,
   },
   container: {
     backgroundColor: "#f8f9fa",
@@ -109,7 +113,7 @@ const styles = StyleSheet.create({
     padding: 16,
   },
   categoriesContainer: {
-    paddingBottom: 10,
+    paddingBottom: 30,
   },
   categoryButton: {
     backgroundColor: "#fff",
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 16,
     marginRight: 8,
     elevation: 3,
-    marginBottom: "-100%",
+    // marginBottom: "-100%",
     height: 40,
   },
   selectedCategoryButton: {
@@ -132,14 +136,14 @@ const styles = StyleSheet.create({
     color: "#fff",
   },
   card: {
-    marginTop: 5,
+    // marginTop: ,
     paddingTop: 15,
     marginLeft: 50,
     paddingLeft: 10,
     justifyContent: "center",
     backgroundColor: "white",
     borderRadius: 10,
-    marginBottom: 20,
+    marginBottom: 10,
   },
   cards: {
     marginLeft: 20,
@@ -155,10 +159,10 @@ const styles = StyleSheet.create({
     height: 100,
     backgroundColor: "#fff",
     borderRadius: 12,
-    marginBottom: 16,
+    marginBottom: 8,
     elevation: 2,
     marginLeft: "-20%",
-    marginTop: "-10%",
+    marginTop: "-2%",
   },
   serviceInfoVertical: {
     flexDirection: "row",
@@ -167,7 +171,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     color: "#333",
-    padding: 5,
+    // padding: 5,
     width: "100%",
   },
   vendorDetail: {

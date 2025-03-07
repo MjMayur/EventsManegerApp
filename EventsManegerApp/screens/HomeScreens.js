@@ -94,7 +94,7 @@ const HomeScreen = ({ navigation }) => {
               keyExtractor={(item) => item.id}
               horizontal
               showsHorizontalScrollIndicator={false}
-              onScroll={(e) => handleScroll(service.id, e)}
+              // onScroll={(e) => handleScroll(service.id, e)}
               snapToInterval={width - 32}
               snapToAlignment="start"
               decelerationRate="fast"
