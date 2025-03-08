@@ -14,6 +14,7 @@ import EventDetailsScreen from "./VendorDetail";
 import Vendors from "./Vendors";
 import Notifications from "./Notifications";
 import VendorDetailsScreen from "./VendorDetail";
+import TaskList from "./TaskList";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -106,6 +107,11 @@ export default function AppNavigator() {
         name="Notifications"
         component={Notifications} // Now HelpScreen is registered in Stack
         options={{ title: "Notifications" }}
+      />
+      <Stack.Screen
+        name="Task List"
+        component={TaskList} // Now HelpScreen is registered in Stack
+        options={{ title: "TaskList" }}
       />
     </Stack.Navigator>
   );
