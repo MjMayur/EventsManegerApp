@@ -10,8 +10,10 @@ import { View, TouchableOpacity, StyleSheet } from "react-native";
 import NewEventScreen from "./NewEvent";
 import MyEventsScreens from "./MyEventsScreens";
 import ChangePasswordScreen from "./ChangePasswordScreen";
-import EventDetailsScreen from "./EventDetailsScreen";
+import EventDetailsScreen from "./VendorDetail";
 import Vendors from "./Vendors";
+import Notifications from "./Notifications";
+import VendorDetailsScreen from "./VendorDetail";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -96,9 +98,14 @@ export default function AppNavigator() {
         options={{ title: "ChangePassword" }}
       />
       <Stack.Screen
-        name="Event Details"
-        component={EventDetailsScreen} // Now HelpScreen is registered in Stack
-        options={{ title: "EventDetails" }}
+        name="Vendor Details"
+        component={VendorDetailsScreen} // Now HelpScreen is registered in Stack
+        options={{ title: "VendorDetails" }}
+      />
+      <Stack.Screen
+        name="Notifications"
+        component={Notifications} // Now HelpScreen is registered in Stack
+        options={{ title: "Notifications" }}
       />
     </Stack.Navigator>
   );

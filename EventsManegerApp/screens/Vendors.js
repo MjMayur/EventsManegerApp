@@ -13,7 +13,7 @@ import { services } from "./commonData";
 
 const { width } = Dimensions.get("window");
 
-const HomeScreen = ({ navigation }) => {
+const Vendors = ({ navigation }) => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
   const [activeIndices, setActiveIndices] = useState({});
@@ -54,7 +54,7 @@ const HomeScreen = ({ navigation }) => {
     <View style={styles.card}>
       <TouchableOpacity
         style={styles.serviceCardVertical}
-        onPress={() => navigation.navigate("VendorDetails", { vendor: item })}
+        onPress={() => navigation.navigate("Vendor Details")}
       >
         <View style={styles.serviceInfoVertical}>
           <Image
@@ -98,6 +98,7 @@ const HomeScreen = ({ navigation }) => {
         keyExtractor={(item) => item.id}
         renderItem={renderVendorItem}
         contentContainerStyle={styles.verticalScrollContainer}
+        onPress={() => navigation.navigate("Vendor Details")}
       />
     </View>
   );
@@ -185,4 +186,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default Vendors;
