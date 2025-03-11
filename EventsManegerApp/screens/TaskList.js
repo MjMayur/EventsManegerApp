@@ -6,15 +6,39 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
 import Checkbox from "expo-checkbox";
 
 const tasksData = [
-  { id: "1", task: "Book Photographer", completed: false },
-  { id: "2", task: "Book Caterers", completed: false },
-  { id: "3", task: "Book Venue", completed: false },
-  { id: "4", task: "Send Invitations", completed: false },
-  { id: "5", task: "Finalize Decorations", completed: false },
+  {
+    id: "1",
+    task: "Book Photographer",
+    info: "Capture memories with professional photography services",
+    completed: false,
+  },
+  {
+    id: "2",
+    task: "Book Caterers",
+    info: "Delicious catering options for all guest preferences",
+    completed: false,
+  },
+  {
+    id: "3",
+    task: "Book Venue",
+    info: "Find the perfect location for your special event",
+    completed: false,
+  },
+  {
+    id: "4",
+    task: "Send Invitations",
+    info: "Manage guest list and send digital/physical invites",
+    completed: false,
+  },
+  {
+    id: "5",
+    task: "Finalize Decorations",
+    info: "Create the perfect ambiance with themed decorations",
+    completed: false,
+  },
 ];
 
 const TaskList = () => {
@@ -29,44 +53,61 @@ const TaskList = () => {
 
   const handleBookNow = (taskId) => {
     console.log(`Book Now clicked for task ${taskId}`);
-    // Add your booking logic here
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Plan and Track Your Tasks</Text>
+      {/* Task List */}
       <FlatList
         data={tasks}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <View style={styles.taskCard}>
-            {/* Task Details */}
-            <View style={styles.taskDetails}>
+          <TouchableOpacity
+            style={styles.taskCard}
+            onPress={() => toggleTaskCompletion(item.id)}
+          >
+            {/* Left Side Content */}
+            <View style={styles.taskContent}>
               <Checkbox
                 value={item.completed}
                 onValueChange={() => toggleTaskCompletion(item.id)}
-                color={item.completed ? "#2a5298" : "#ccc"}
+                color={item.completed ? "#6C63FF" : "#ccc"}
+                style={styles.checkbox}
               />
-              <Text
-                style={[
-                  styles.taskText,
-                  item.completed && styles.completedTaskText,
-                ]}
-              >
-                {item.task}
-              </Text>
+
+              {/* Task Info */}
+              <View style={styles.textContainer}>
+                <Text
+                  style={[
+                    styles.taskTitle,
+                    item.completed && styles.completedTask,
+                  ]}
+                >
+                  {item.task}
+                </Text>
+                <Text style={styles.taskInfo}>{item.info}</Text>
+              </View>
             </View>
 
             {/* Book Now Button */}
+
             <TouchableOpacity
               style={styles.bookNowButton}
               onPress={() => handleBookNow(item.id)}
             >
-              <Text style={styles.bookNowButtonText}>Book Now</Text>
+              <Text style={styles.bookNowText}>Book</Text>
             </TouchableOpacity>
-          </View>
+          </TouchableOpacity>
         )}
       />
+      <View style={styles.button}>
+        <TouchableOpacity
+          style={styles.bookNowButton}
+          onPress={() => handleBookNow(item.id)}
+        >
+          <Text style={styles.bookNowText}>Mark </Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
@@ -74,51 +115,71 @@ const TaskList = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    backgroundColor: "#f8f9fa",
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#333",
-    marginBottom: 16,
+    padding: 10,
+    backgroundColor: "#F5F7FF",
   },
   taskCard: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    backgroundColor: "#fff",
-    borderRadius: 12,
-    padding: 16,
-    marginBottom: 12,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
+    backgroundColor: "#FFFFFF",
+    borderRadius: 15,
+    padding: 18,
+    marginBottom: 15,
+    shadowColor: "#6C63FF",
+    shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    shadowRadius: 10,
+    elevation: 5,
   },
-  taskDetails: {
+  taskContent: {
     flexDirection: "row",
-    alignItems: "center",
+    alignItems: "flex-start",
+    marginBottom: 15,
   },
-  taskText: {
-    fontSize: 16,
-    color: "#333",
-    marginLeft: 8,
+  checkbox: {
+    marginRight: 15,
+    borderRadius: 5,
+    borderWidth: 2,
   },
-  completedTaskText: {
+  textContainer: {
+    flex: 1,
+  },
+  taskTitle: {
+    fontSize: 17,
+    fontWeight: "600",
+    color: "#2A2F4F",
+    marginBottom: 5,
+  },
+  completedTask: {
     textDecorationLine: "line-through",
-    color: "#888",
+    color: "#A0A3BD",
+  },
+  taskInfo: {
+    fontSize: 13.5,
+    color: "#6B7280",
+    lineHeight: 20,
   },
   bookNowButton: {
-    backgroundColor: "#2a5298",
-    borderRadius: 8,
-    paddingVertical: 8,
-    paddingHorizontal: 16,
+    backgroundColor: "transparent", // ✅ Transparent background
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    alignItems: "center",
+    justifyContent: "center",
+    borderWidth: 2, // Optional: add a border to make it visible
+    borderColor: "#6C63FF", // Optional: border color
+    shadowColor: "transparent", // ✅ No shadow
+    alignSelf: "flex-end", // ✅ Align to right
   },
-  bookNowButtonText: {
-    color: "#fff",
-    fontWeight: "bold",
+  bookNowText: {
+    color: "#6C63FF", // ✅ Text color to match theme
+    fontWeight: "600",
+    fontSize: 15,
+    letterSpacing: 0.5,
+  },
+  buttonContainer: {
+    position: "absolute",
+    bottom: 20,
+    right: 20, // ✅ Places it at the bottom right
+    backgroundColor: "transparent",
   },
 });
 

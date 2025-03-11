@@ -189,7 +189,7 @@ const HomeScreen = ({ navigation }) => {
                   <Text style={styles.vendorText}>{item.rating}</Text>
                 </View>
                 <View style={styles.vendorDetail}>
-                  <MaterialIcons name="Chevron Right" size={16} color="#666" />
+                  <MaterialIcons name="chevron-right" size={16} color="#666" />
                   <Text style={styles.vendorText}>{item.price}</Text>
                 </View>
               </View>

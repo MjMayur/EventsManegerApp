@@ -111,7 +111,7 @@ export default function AppNavigator() {
       <Stack.Screen
         name="Task List"
         component={TaskList} // Now HelpScreen is registered in Stack
-        options={{ title: "TaskList" }}
+        options={{ title: "Task List" }}
       />
     </Stack.Navigator>
   );
