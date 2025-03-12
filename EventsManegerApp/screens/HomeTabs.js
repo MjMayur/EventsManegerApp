@@ -15,6 +15,7 @@ import Vendors from "./Vendors";
 import Notifications from "./Notifications";
 import VendorDetailsScreen from "./VendorDetail";
 import TaskList from "./TaskList";
+import GuestList from "./GuestList";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -110,8 +111,23 @@ export default function AppNavigator() {
       />
       <Stack.Screen
         name="Task List"
-        component={TaskList} // Now HelpScreen is registered in Stack
-        options={{ title: "Task List" }}
+        component={TaskList} // Now TaskList is registered in Stack
+        options={{
+          title: "Task List",
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Profile")} // Profile is in Stack now
+              style={{ marginRight: 15 }}
+            >
+              <MaterialIcons name="task-alt" size={30} color="green" />
+            </TouchableOpacity>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="Guest List"
+        component={GuestList} // Now HelpScreen is registered in Stack
+        options={{ title: "Guest List" }}
       />
     </Stack.Navigator>
   );

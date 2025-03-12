@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import Checkbox from "expo-checkbox";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const tasksData = [
   {
@@ -51,8 +52,9 @@ const TaskList = () => {
     setTasks(updatedTasks);
   };
 
-  const handleBookNow = (taskId) => {
-    console.log(`Book Now clicked for task ${taskId}`);
+  // Update this function to perform your desired global action.
+  const handleMark = () => {
+    console.log("Mark button pressed");
   };
 
   return (
@@ -90,22 +92,22 @@ const TaskList = () => {
             </View>
 
             {/* Book Now Button */}
-
             <TouchableOpacity
               style={styles.bookNowButton}
-              onPress={() => handleBookNow(item.id)}
+              onPress={() =>
+                console.log(`Book Now clicked for task ${item.id}`)
+              }
             >
               <Text style={styles.bookNowText}>Book</Text>
             </TouchableOpacity>
           </TouchableOpacity>
         )}
       />
-      <View style={styles.button}>
-        <TouchableOpacity
-          style={styles.bookNowButton}
-          onPress={() => handleBookNow(item.id)}
-        >
-          <Text style={styles.bookNowText}>Mark </Text>
+
+      {/* Floating Mark Button */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity style={styles.markButton} onPress={handleMark}>
+          <MaterialIcons name="task-alt" size={30} color="white" />
         </TouchableOpacity>
       </View>
     </View>
@@ -158,28 +160,45 @@ const styles = StyleSheet.create({
     lineHeight: 20,
   },
   bookNowButton: {
-    backgroundColor: "transparent", // ✅ Transparent background
+    backgroundColor: "transparent",
     borderRadius: 10,
     paddingVertical: 12,
     paddingHorizontal: 20,
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 2, // Optional: add a border to make it visible
-    borderColor: "#6C63FF", // Optional: border color
-    shadowColor: "transparent", // ✅ No shadow
-    alignSelf: "flex-end", // ✅ Align to right
+    borderWidth: 2,
+    borderColor: "#6C63FF",
+    shadowColor: "transparent",
+    alignSelf: "flex-end",
   },
   bookNowText: {
-    color: "#6C63FF", // ✅ Text color to match theme
+    color: "#6C63FF",
     fontWeight: "600",
     fontSize: 15,
     letterSpacing: 0.5,
   },
+  // Floating Button Container (absolute positioning)
   buttonContainer: {
     position: "absolute",
-    bottom: 20,
-    right: 20, // ✅ Places it at the bottom right
+    bottom: 20, // Adjust as needed
+    left: 0,
+    right: 0,
+    alignItems: "flex-end",
+    margin: 10,
     backgroundColor: "transparent",
+  },
+  markButton: {
+    paddingVertical: 12,
+    paddingHorizontal: 20,
+    borderWidth: 2,
+    borderColor: "transparent",
+    borderRadius: 10,
+    backgroundColor: "transparent",
+  },
+  markButtonText: {
+    color: "#fff",
+    fontWeight: "600",
+    fontSize: 15,
   },
 });
 

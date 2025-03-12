@@ -218,8 +218,10 @@ const HomeScreen = ({ navigation }) => {
             style={styles.icon}
           />
         </TouchableOpacity>
-
-        <View style={styles.cards}>
+        <TouchableOpacity
+          style={styles.cards}
+          onPress={() => navigation.navigate("Guest List")} // Navigate to TaskList screen
+        >
           <View style={styles.textContainer}>
             <Text style={styles.vendors}>Create Your Guest List</Text>
 
@@ -235,8 +237,7 @@ const HomeScreen = ({ navigation }) => {
             color="#000"
             style={styles.icon}
           />
-        </View>
-
+        </TouchableOpacity>
         <View style={styles.cards}>
           <View style={styles.textContainer}>
             <Text style={styles.vendors}>Build a Website for Your Event</Text>
