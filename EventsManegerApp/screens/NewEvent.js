@@ -3,7 +3,6 @@ import {
   View,
   Text,
   TextInput,
-  Button,
   ScrollView,
   Switch,
   TouchableOpacity,
@@ -12,7 +11,6 @@ import {
   StyleSheet,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-// import DateTimePicker from "@react-native-community/datetimepicker";
 import * as ImagePicker from "expo-image-picker";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
@@ -54,8 +52,6 @@ const NewEventScreen = () => {
 
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [selectedTime, setSelectedTime] = useState(new Date());
-  const [isDatePickerVisible, setDatePickerVisible] = useState(false);
-  const [isTimePickerVisible, setTimePickerVisible] = useState(false);
   const [isRSVP, setRSVP] = useState(false);
   const [imageUri, setImageUri] = useState(null);
 
@@ -78,138 +74,162 @@ const NewEventScreen = () => {
   };
 
   return (
-    <ScrollView style={styles.container}>
-      <Text style={styles.header}>Create New Event</Text>
+    <ScrollView
+      style={styles.container}
+      contentContainerStyle={styles.contentContainer}
+      keyboardShouldPersistTaps="handled"
+    >
+      <View style={styles.innerContainer}>
+        {/* Event Name */}
+        <View style={styles.inputContainer}>
+          <MaterialIcons name="event" size={22} style={styles.icon} />
+          <Controller
+            control={control}
+            name="eventName"
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder="Event Name"
+                placeholderTextColor="#A0AEC0"
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
+          />
+        </View>
+        {errors.eventName && (
+          <Text style={styles.error}>{errors.eventName.message}</Text>
+        )}
 
-      {/* Event Name */}
-      <View style={styles.inputContainer}>
-        <MaterialIcons name="event" size={20} color="#666" />
-        <Controller
-          control={control}
-          name="eventName"
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              style={styles.input}
-              placeholder="Event Name"
-              onChangeText={onChange}
-              value={value}
-            />
-          )}
-        />
-      </View>
-      {errors.eventName && (
-        <Text style={styles.error}>{errors.eventName.message}</Text>
-      )}
+        {/* Category Picker */}
+        <View style={styles.inputContainer}>
+          <FontAwesome name="list-alt" size={22} style={styles.icon} />
+          <Controller
+            control={control}
+            name="category"
+            render={({ field: { onChange, value } }) => (
+              <Picker
+                selectedValue={value}
+                onValueChange={onChange}
+                style={styles.picker}
+                dropdownIconColor="#4C51BF"
+              >
+                <Picker.Item
+                  label="Select Category"
+                  value=""
+                  style={styles.pickerPlaceholder}
+                />
+                <Picker.Item label="Music" value="music" />
+                <Picker.Item label="Technology" value="tech" />
+                <Picker.Item label="Business" value="business" />
+                <Picker.Item label="Sports" value="sports" />
+              </Picker>
+            )}
+          />
+        </View>
+        {errors.category && (
+          <Text style={styles.error}>{errors.category.message}</Text>
+        )}
 
-      {/* Category Picker */}
-      <View style={styles.inputContainer}>
-        <FontAwesome name="list-alt" size={20} color="#666" />
-        <Controller
-          control={control}
-          name="category"
-          render={({ field: { onChange, value } }) => (
-            <Picker
-              selectedValue={value}
-              onValueChange={onChange}
-              style={styles.picker}
-            >
-              <Picker.Item label="Select Category" value="" />
-              <Picker.Item label="Music" value="music" />
-              <Picker.Item label="Technology" value="tech" />
-              <Picker.Item label="Business" value="business" />
-              <Picker.Item label="Sports" value="sports" />
-            </Picker>
-          )}
-        />
-      </View>
-      {errors.category && (
-        <Text style={styles.error}>{errors.category.message}</Text>
-      )}
-
-      {/* Date Picker */}
-      <View style={styles.inputContainer}>
-        <MaterialIcons name="date-range" size={20} color="#666" />
+        {/* Date Picker */}
         <TouchableOpacity
-          style={styles.dateTime}
+          style={styles.inputContainer}
           onPress={() => setDatePickerVisible(true)}
+          activeOpacity={0.8}
         >
-          <Text>{selectedDate.toDateString()}</Text>
+          <MaterialIcons name="date-range" size={22} style={styles.icon} />
+          <View style={styles.dateTime}>
+            <Text style={styles.dateTimeText}>
+              {selectedDate.toDateString()}
+            </Text>
+            <MaterialIcons name="chevron-right" size={24} color="#CBD5E0" />
+          </View>
         </TouchableOpacity>
-        {/* {isDatePickerVisible && (
-          <DateTimePicker
-            value={selectedDate}
-            mode="date"
-            display="default"
-            onChange={(event, date) => {
-              setDatePickerVisible(false);
-              if (date) setSelectedDate(date);
-            }}
-          />
-        )} */}
-      </View>
 
-      {/* Time Picker */}
-      <View style={styles.inputContainer}>
-        <MaterialIcons name="access-time" size={20} color="#666" />
+        {/* Time Picker */}
         <TouchableOpacity
-          style={styles.dateTime}
+          style={styles.inputContainer}
           onPress={() => setTimePickerVisible(true)}
+          activeOpacity={0.8}
         >
-          <Text>{selectedTime.toLocaleTimeString()}</Text>
+          <MaterialIcons name="access-time" size={22} style={styles.icon} />
+          <View style={styles.dateTime}>
+            <Text style={styles.dateTimeText}>
+              {selectedTime.toLocaleTimeString()}
+            </Text>
+            <MaterialIcons name="chevron-right" size={24} color="#CBD5E0" />
+          </View>
         </TouchableOpacity>
-        {/* {isTimePickerVisible && (
-          <DateTimePicker
-            value={selectedTime}
-            mode="time"
-            display="default"
-            onChange={(event, time) => {
-              setTimePickerVisible(false);
-              if (time) setSelectedTime(time);
-            }}
+
+        {/* Location */}
+        <View style={styles.inputContainer}>
+          <MaterialIcons name="location-on" size={22} style={styles.icon} />
+          <Controller
+            control={control}
+            name="location"
+            render={({ field: { onChange, value } }) => (
+              <TextInput
+                style={styles.input}
+                placeholder="Location"
+                placeholderTextColor="#A0AEC0"
+                onChangeText={onChange}
+                value={value}
+              />
+            )}
           />
-        )} */}
-      </View>
+        </View>
+        {errors.location && (
+          <Text style={styles.error}>{errors.location.message}</Text>
+        )}
 
-      {/* Location */}
-      <View style={styles.inputContainer}>
-        <MaterialIcons name="location-on" size={20} color="#666" />
-        <Controller
-          control={control}
-          name="location"
-          render={({ field: { onChange, value } }) => (
-            <TextInput
-              style={styles.input}
-              placeholder="Location"
-              onChangeText={onChange}
-              value={value}
-            />
+        {/* Image Upload */}
+        <TouchableOpacity
+          style={styles.imagePicker}
+          onPress={selectImage}
+          activeOpacity={0.8}
+        >
+          {imageUri ? (
+            <Image source={{ uri: imageUri }} style={styles.image} />
+          ) : (
+            <>
+              <MaterialIcons
+                name="cloud-upload"
+                size={40}
+                style={styles.uploadIcon}
+              />
+              <Text style={styles.imagePickerText}>
+                Tap to upload event banner
+              </Text>
+              <Text style={styles.imagePickerSubText}>
+                Recommended ratio: 4:3
+              </Text>
+            </>
           )}
-        />
-      </View>
-      {errors.location && (
-        <Text style={styles.error}>{errors.location.message}</Text>
-      )}
+        </TouchableOpacity>
 
-      {/* Image Upload */}
-      <View style={styles.inputContainer}>
-        <MaterialIcons name="image" size={20} color="#666" />
-        <TouchableOpacity onPress={selectImage} style={styles.imagePicker}>
-          <Text>Upload Event Banner</Text>
+        {/* RSVP Switch */}
+        <View style={styles.switchContainer}>
+          <View style={styles.switchLabel}>
+            <Ionicons name="people" size={22} style={styles.icon} />
+            <Text style={styles.switchText}>RSVP Required</Text>
+          </View>
+          <Switch
+            value={isRSVP}
+            onValueChange={setRSVP}
+            thumbColor="#fff"
+            trackColor={{ false: "#CBD5E0", true: "#4C51BF" }}
+          />
+        </View>
+
+        {/* Submit Button */}
+        <TouchableOpacity
+          style={styles.button}
+          onPress={handleSubmit(onSubmit)}
+          activeOpacity={0.8}
+        >
+          <Text style={styles.buttonText}>Create Event</Text>
         </TouchableOpacity>
       </View>
-      {imageUri && <Image source={{ uri: imageUri }} style={styles.image} />}
-
-      {/* RSVP Switch */}
-      <View style={styles.inputContainer}>
-        <Ionicons name="people" size={20} color="#666" />
-        <Text>RSVP Required?</Text>
-        <Switch value={isRSVP} onValueChange={setRSVP} />
-      </View>
-
-      {/* Submit Button */}
-      <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
-        <Text style={styles.buttonText}>Create Event</Text>
-      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -217,80 +237,132 @@ const NewEventScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: "#f5f5f5",
+    backgroundColor: "#ffffff",
   },
-  header: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 20,
-    textAlign: "center",
-    color: "#333",
+  contentContainer: {
+    flexGrow: 1,
+    paddingHorizontal: 15,
+    paddingBottom: 40, // Ensure space for button
+  },
+  innerContainer: {
+    paddingVertical: 15,
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
+    height: 50,
     marginBottom: 15,
+    backgroundColor: "#F7FAFC",
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    borderWidth: 1,
+    borderColor: "#E2E8F0",
   },
   input: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    marginLeft: 10,
-    backgroundColor: "#fff",
+    fontSize: 16,
+    color: "#4A5568",
+    // marginLeft: 12,
+    paddingVertical: 0,
+    includeFontPadding: false,
+    textAlignVertical: "center",
   },
   picker: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    marginLeft: 10,
-    backgroundColor: "#fff",
+    height: 50,
+    color: "#4A5568",
+  },
+  pickerPlaceholder: {
+    color: "#A0AEC0", // Match placeholder color
+  },
+  icon: {
+    marginRight: 10,
+    color: "#4C51BF",
   },
   dateTime: {
     flex: 1,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    marginLeft: 10,
-    backgroundColor: "#fff",
-    justifyContent: "center",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingRight: 10,
+  },
+  dateTimeText: {
+    color: "#4A5568",
+    fontSize: 16,
   },
   imagePicker: {
-    flex: 1,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 5,
-    padding: 10,
-    marginLeft: 10,
-    backgroundColor: "#fff",
+    height: 150,
+    borderStyle: "dashed",
+    borderWidth: 2,
+    borderColor: "#CBD5E0",
+    borderRadius: 10,
+    marginVertical: 15,
+    backgroundColor: "#F7FAFC",
+    justifyContent: "center",
     alignItems: "center",
   },
   image: {
     width: "100%",
-    height: 200,
-    marginBottom: 15,
-    borderRadius: 5,
+    height: "100%",
+    borderRadius: 10,
+  },
+  uploadIcon: {
+    color: "#CBD5E0",
+    marginBottom: 8,
+  },
+  imagePickerText: {
+    color: "#718096",
+    fontSize: 14,
+  },
+  imagePickerSubText: {
+    color: "#CBD5E0",
+    fontSize: 12,
+    marginTop: 4,
   },
   error: {
-    color: "red",
-    marginBottom: 10,
-    marginLeft: 30,
+    color: "#E53E3E",
+    marginBottom: 15,
+    marginLeft: 15,
+    fontSize: 13,
+    fontWeight: "500",
+  },
+  switchContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 15,
+    backgroundColor: "#F7FAFC",
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#E2E8F0",
+    marginVertical: 15,
+  },
+  switchLabel: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  switchText: {
+    color: "#4A5568",
+    fontSize: 16,
   },
   button: {
-    backgroundColor: "#007bff",
-    padding: 15,
-    borderRadius: 5,
+    backgroundColor: "#4C51BF",
+    padding: 18,
+    borderRadius: 10,
     alignItems: "center",
     marginTop: 20,
+    marginBottom: 30,
+    elevation: 3,
+    shadowColor: "#4C51BF",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
   },
   buttonText: {
     color: "#fff",
     fontSize: 16,
-    fontWeight: "bold",
+    fontWeight: "600",
+    letterSpacing: 0.5,
   },
 });
 

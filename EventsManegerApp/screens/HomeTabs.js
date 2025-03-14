@@ -67,6 +67,15 @@ function MainTabs({ navigation }) {
           ),
         }}
       />
+      <Tab.Screen
+        name="New Event Screen"
+        component={NewEventScreen}
+        options={{
+          tabBarIcon: ({ color, size }) => (
+            <MaterialIcons name="calendar" size={size} color={color} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
