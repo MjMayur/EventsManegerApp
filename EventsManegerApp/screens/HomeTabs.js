@@ -16,6 +16,8 @@ import Notifications from "./Notifications";
 import VendorDetailsScreen from "./VendorDetail";
 import TaskList from "./TaskList";
 import GuestList from "./GuestList";
+import { Image } from "react-native";
+import Animated from "react-native-reanimated";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -44,7 +46,11 @@ function MainTabs({ navigation }) {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="home" size={size} color={color} />
+            <Image
+              source={require("../assets/icons/pentagon-icon-512x486-vtu4skbd.png")}
+              color={color}
+              style={{ width: 26, height: 25 }}
+            />
           ),
         }}
       />
@@ -126,17 +132,68 @@ export default function AppNavigator() {
           headerRight: () => (
             <TouchableOpacity
               onPress={() => navigation.navigate("Profile")} // Profile is in Stack now
-              style={{ marginRight: 15 }}
+              style={styles.checkButtonContainer}
             >
-              <MaterialIcons name="task-alt" size={30} color="green" />
+              <View style={styles.filledCheckButton}>
+                <MaterialIcons name="task-alt" size={24} color="white" />
+              </View>
             </TouchableOpacity>
           ),
+          headerTitleStyle: {
+            fontWeight: "600",
+            color: "#2A2F4F",
+          },
+          headerStyle: {
+            backgroundColor: "#F8FAFF",
+            elevation: 0,
+            shadowOpacity: 0,
+          },
         }}
       />
       <Stack.Screen
         name="Guest List"
-        component={GuestList} // Now HelpScreen is registered in Stack
-        options={{ title: "Guest List" }}
+        component={GuestList}
+        options={({ navigation }) => ({
+          title: "Guest List",
+          headerRight: () => (
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Profile")}
+              style={styles.checkButtonContainer}
+            >
+              {/* Option 1: Minimal outline with animation */}
+              {/* <Animated.View style={styles.checkButton}>
+                <MaterialIcons
+                  name="task-alt"
+                  size={28}
+                  color="#4CAF50"
+                  style={styles.checkIcon}
+                />
+              </Animated.View> */}
+
+              {/* Option 2: Filled button with shadow */}
+              <View style={styles.filledCheckButton}>
+                <MaterialIcons name="task-alt" size={24} color="white" />
+              </View>
+
+              {/* Option 3: Badge with count */}
+              {/* <View style={styles.badgeCheckButton}>
+          <MaterialIcons name="task-alt" size={24} color="white" />
+          <View style={styles.badge}>
+            <Text style={styles.badgeText}>3</Text>
+          </View>
+        </View> */}
+            </TouchableOpacity>
+          ),
+          headerTitleStyle: {
+            fontWeight: "600",
+            color: "#2A2F4F",
+          },
+          headerStyle: {
+            backgroundColor: "#F8FAFF",
+            elevation: 0,
+            shadowOpacity: 0,
+          },
+        })}
       />
     </Stack.Navigator>
   );
@@ -156,5 +213,60 @@ const styles = StyleSheet.create({
     top: 5,
     justifyContent: "center",
     alignItems: "center",
+  },
+  checkButtonContainer: {
+    marginRight: 15,
+    padding: 5,
+  },
+  checkButton: {
+    backgroundColor: "rgba(76, 175, 80, 0.1)",
+    borderRadius: 20,
+    padding: 8,
+    borderWidth: 1.5,
+    borderColor: "#4CAF50",
+    transform: [{ scale: 1 }],
+  },
+  checkIcon: {
+    textShadowColor: "rgba(0, 0, 0, 0.1)",
+    textShadowOffset: { width: 0, height: 1 },
+    textShadowRadius: 2,
+  },
+  filledCheckButton: {
+    backgroundColor: "#4CAF50",
+    borderRadius: 20,
+    width: 36,
+    height: 36,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 3,
+    shadowColor: "#4CAF50",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+  },
+  badgeCheckButton: {
+    backgroundColor: "#4CAF50",
+    borderRadius: 20,
+    width: 36,
+    height: 36,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "relative",
+  },
+  badge: {
+    position: "absolute",
+    right: -5,
+    top: -5,
+    backgroundColor: "#FF5252",
+    borderRadius: 10,
+    width: 20,
+    height: 20,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  badgeText: {
+    color: "white",
+    fontSize: 10,
+    fontWeight: "bold",
   },
 });

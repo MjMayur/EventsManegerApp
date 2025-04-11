@@ -82,7 +82,7 @@ const HomeScreen = ({ navigation }) => {
       {/* Header */}
       <View style={styles.headerContainer}>
         <View style={styles.headerOverlay}>
-          <Text style={styles.timer}>{formatTime(timer)}</Text>
+          {/* <Text style={styles.timer}>{formatTime(timer)}</Text> */}
         </View>
       </View>
 
@@ -106,10 +106,19 @@ const HomeScreen = ({ navigation }) => {
 
         {/* Vendors Pie Chart */}
         <View style={styles.chartBox}>
-          <Text style={styles.chartTitle}>Vendors</Text>
-          <PieChart data={vendorsData} size={80} />
+          <Text style={styles.chartTitle}>Guest List (Total: 500)</Text>
+          <PieChart
+            data={[
+              { name: "Invited", value: 600, color: "#4CAF50" },
+              { name: "Pending", value: 200, color: "#FF9800" },
+            ]}
+            size={80}
+          />
           <View style={styles.legendContainer}>
-            {vendorsData.map((item, index) => (
+            {[
+              { name: "Invited (300)", value: 300, color: "#4CAF50" },
+              { name: "Pending (200)", value: 200, color: "#FF9800" },
+            ].map((item, index) => (
               <View key={index} style={styles.legendItem}>
                 <View
                   style={[styles.legendDot, { backgroundColor: item.color }]}
@@ -251,7 +260,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f8f9fa",
   },
   headerContainer: {
-    height: 200,
+    height: 600,
     backgroundColor: "#2a5298",
     justifyContent: "center",
     alignItems: "center",

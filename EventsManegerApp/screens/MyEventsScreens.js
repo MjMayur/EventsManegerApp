@@ -11,7 +11,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { TabView, SceneMap, TabBar } from "react-native-tab-view";
 import { services } from "./commonData";
 
-export default function MyEventsScreens() {
+export default function MyEventsScreens({ navigation }) {
   const [index, setIndex] = useState(0);
   const [routes] = useState([
     { key: "upcoming", title: "Upcoming" },
@@ -23,10 +23,16 @@ export default function MyEventsScreens() {
   const oldEvents = services[1].vendors.filter((item) => !item.isUpcoming);
 
   // Render scenes for each tab
-  const renderScene = SceneMap({
-    upcoming: () => <EventList data={upcomingEvents} />,
-    old: () => <EventList data={oldEvents} />,
-  });
+  const renderScene = ({ route }) => {
+    switch (route.key) {
+      case "upcoming":
+        return <EventList data={upcomingEvents} navigation={navigation} />;
+      case "old":
+        return <EventList data={oldEvents} navigation={navigation} />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -50,14 +56,14 @@ export default function MyEventsScreens() {
 }
 
 // EventList component to render the list of events
-const EventList = ({ data }) => (
+const EventList = ({ data, navigation }) => (
   <FlatList
     data={data}
     keyExtractor={(item) => item.id}
     renderItem={({ item }) => (
       <TouchableOpacity
         style={styles.serviceCardVertical}
-        onPress={() => navigation.navigate("VendorDetails", { vendor: item })}
+        onPress={() => navigation.navigate("Vendor Details", { vendor: item })}
       >
         <Image
           source={{ uri: item.image }}

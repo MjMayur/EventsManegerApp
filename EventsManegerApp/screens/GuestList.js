@@ -104,7 +104,10 @@ const GuestList = () => {
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TouchableOpacity
-            style={styles.contactCard}
+            style={[
+              styles.contactCard,
+              selectedGuests.includes(item.id) && styles.selectedContactCard,
+            ]}
             onPress={() => toggleGuestSelection(item.id)}
           >
             <View style={styles.contactInfo}>
@@ -128,6 +131,7 @@ const GuestList = () => {
       />
 
       {/* Add Button */}
+
       <TouchableOpacity style={styles.addButton} onPress={handleAddContact}>
         <Ionicons name="add" size={28} color="white" />
       </TouchableOpacity>
@@ -283,6 +287,7 @@ const styles = StyleSheet.create({
       },
     }),
   },
+
   modalContainer: {
     flex: 1,
     justifyContent: "center",
@@ -338,6 +343,11 @@ const styles = StyleSheet.create({
     color: "red",
     marginBottom: 10,
     textAlign: "center",
+  },
+  selectedContactCard: {
+    borderWidth: 1,
+    borderColor: "#6C63FF",
+    backgroundColor: "#F5F3FF",
   },
 });
 
