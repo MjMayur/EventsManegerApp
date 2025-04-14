@@ -1,6 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
-import { MaterialIcons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  MaterialIcons,
+} from "@expo/vector-icons";
 import HomeScreen from "./HomeScreens";
 import ProfileScreen from "./Profile";
 import SettingsScreen from "./SettingsScreen";
@@ -17,7 +21,7 @@ import VendorDetailsScreen from "./VendorDetail";
 import TaskList from "./TaskList";
 import GuestList from "./GuestList";
 import { Image } from "react-native";
-import Animated from "react-native-reanimated";
+import AntDesign from "react-native-vector-icons/AntDesign";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -32,12 +36,20 @@ function MainTabs({ navigation }) {
           height: 60,
         },
         headerRight: () => (
-          <TouchableOpacity
-            onPress={() => navigation.navigate("Profile")} // Help is in Stack now
-            style={{ marginRight: 15 }}
-          >
-            <MaterialIcons name="account-circle" size={24} color="gray" />
-          </TouchableOpacity>
+          <>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Profile")} // Help is in Stack now
+              style={{ marginRight: 15 }}
+            >
+              <Ionicons name="notifications-outline" size={30} color="gray" />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("Profile")} // Help is in Stack now
+              style={{ marginRight: 15 }}
+            >
+              <MaterialIcons name="account-circle" size={30} color="gray" />
+            </TouchableOpacity>
+          </>
         ),
       }}
     >
@@ -46,11 +58,7 @@ function MainTabs({ navigation }) {
         component={HomeScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <Image
-              source={require("../assets/icons/pentagon-icon-512x486-vtu4skbd.png")}
-              color={color}
-              style={{ width: 26, height: 25 }}
-            />
+            <AntDesign name="home" size={size} color={color} />
           ),
         }}
       />
@@ -78,7 +86,11 @@ function MainTabs({ navigation }) {
         component={NewEventScreen}
         options={{
           tabBarIcon: ({ color, size }) => (
-            <MaterialIcons name="calendar" size={size} color={color} />
+            <MaterialCommunityIcons
+              name="calendar-heart"
+              size={size}
+              color={color}
+            />
           ),
         }}
       />
