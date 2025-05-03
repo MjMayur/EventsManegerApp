@@ -9,7 +9,7 @@ import {
   Dimensions,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { services } from "./commonData";
+import { services, services1 } from "./commonData";
 
 const { width } = Dimensions.get("window");
 
@@ -184,7 +184,7 @@ const HomeScreen = ({ navigation }) => {
 
         {/* Vendors List */}
         <FlatList
-          data={filteredVendors[0]?.vendors || []}
+          data={services1}
           keyExtractor={(item) => item.id}
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -195,14 +195,14 @@ const HomeScreen = ({ navigation }) => {
             >
               <MaterialIcons name="store" size={40} color="#2a5298" />
               <View style={styles.vendorInfo}>
-                <Text style={styles.vendorName}>{item.name}</Text>
+                <Text style={styles.vendorName}>{item.type}</Text>
                 <View style={styles.vendorDetail}>
-                  <MaterialIcons name="star" size={16} color="#FFD700" />
-                  <Text style={styles.vendorText}>{item.rating}</Text>
+                  {/* <MaterialIcons name="star" size={16} color="#FFD700" /> */}
+                  {/* <Text style={styles.vendorText}>{item.rating}</Text> */}
                 </View>
                 <View style={styles.vendorDetail}>
-                  <MaterialIcons name="attach-money" size={16} color="#666" />
-                  <Text style={styles.vendorText}>{item.price}</Text>
+                  {/* <MaterialIcons name="attach-money" size={16} color="#666" /> */}
+                  {/* <Text style={styles.vendorText}>{item.price}</Text> */}
                 </View>
               </View>
             </TouchableOpacity>
