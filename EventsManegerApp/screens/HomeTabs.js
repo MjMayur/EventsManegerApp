@@ -6,20 +6,20 @@ import {
   MaterialIcons,
 } from "@expo/vector-icons";
 import HomeScreen from "./HomeScreens";
-import ProfileScreen from "./Profile";
-import SettingsScreen from "./SettingsScreen";
-import HelpScreen from "./HelpScreen"; // Ensure this file exists
-import AboutScreen from "./About";
+import ProfileScreen from "./Profile/Profile";
+import SettingsScreen from "./Profile/SettingsScreen";
+import HelpScreen from "./Profile/HelpScreen"; // Ensure this file exists
+import AboutScreen from "./Profile/About";
 import { View, TouchableOpacity, StyleSheet } from "react-native";
-import NewEventScreen from "./NewEvent";
-import MyEventsScreens from "./MyEventsScreens";
-import ChangePasswordScreen from "./ChangePasswordScreen";
-import EventDetailsScreen from "./VendorDetail";
-import Vendors from "./Vendors";
-import Notifications from "./Notifications";
-import VendorDetailsScreen from "./VendorDetail";
-import TaskList from "./TaskList";
-import GuestList from "./GuestList";
+import NewEventScreen from "./Event/NewEvent";
+import MyEventsScreens from "./Event/MyEventsScreens";
+import ChangePasswordScreen from "./Authentication/ChangePasswordScreen";
+import EventDetailsScreen from "./Vendors Screen/VendorDetail";
+import Vendors from "./Vendors Screen/Vendors";
+import Notifications from "./Profile/Notifications";
+import VendorDetailsScreen from "./Vendors Screen/VendorDetail";
+import TaskList from "./Event/TaskList";
+import GuestList from "./Event/GuestList";
 import { Image } from "react-native";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
